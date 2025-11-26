@@ -506,14 +506,14 @@ onUnmounted(() => {
 .volume-slider {
   flex: 1;
   height: 4px;
-  -webkit-appearance: none;
+  appearance: none;
   background: var(--vp-c-brand-3);
   border-radius: 2px;
   outline: none;
 }
 
 .volume-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
+  appearance: none;
   width: 12px;
   height: 12px;
   border-radius: 50%;

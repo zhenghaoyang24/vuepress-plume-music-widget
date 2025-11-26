@@ -1,4 +1,4 @@
-import MusicPlayer from './MusicPlayer.vue'
+import MusicPlayer from './src/MusicPlayer.vue'
 
 export default (options = {}) => {
   return (app) => {

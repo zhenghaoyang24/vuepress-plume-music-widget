@@ -5,7 +5,7 @@ import { dirname, resolve } from 'path'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
-export default (options = {}, ctx) => {
+const plugin = (options = {}, ctx) => {
   return {
     name: 'vuepress-plume-music-widget',
     
@@ -26,3 +26,8 @@ export default (options = {}, ctx) => {
     globalUIComponents: 'MusicPlayer'
   }
 }
+
+export default plugin
+
+// 为了确保兼容性，也导出一个命名导出
+export { plugin as musicWidget }

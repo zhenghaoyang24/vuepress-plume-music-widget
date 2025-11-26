@@ -48,7 +48,7 @@
 ```
 src/
 ├── MusicPlayer.vue  # 音乐播放器组件
-├── index.js         # 插件入口文件
+└── index.js         # 插件入口文件
 ```
 
 ### 配置选项说明
@@ -110,7 +110,7 @@ export default defineUserConfig({
 ## 项目文件清单
 
 - `src/MusicPlayer.vue` - 音乐播放器组件
-- `src/index.js` - 插件入口文件
+- `index.js` - 插件入口文件
 - `package.json` - 包配置文件
 - `README.md` - 项目说明文档
 - `usage-example.md` - 使用示例文档

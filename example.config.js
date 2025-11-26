@@ -1,7 +1,7 @@
 // 示例配置文件，展示如何在 VuePress 项目中使用音乐播放器插件
 
 import { defineUserConfig } from 'vuepress'
-import musicPlayer from './src/index.js'
+import musicPlayer from './index.js'
 
 export default defineUserConfig({
   base: '/',

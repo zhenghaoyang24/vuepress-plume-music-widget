@@ -1,6 +1,6 @@
 {
   "name": "vuepress-plume-music-widget",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "VuePress 音乐播放挂件插件，提供全局音乐播放功能，支持播放控制、进度调节和音量控制。",
   "main": "index.js",
   "scripts": {
@@ -16,9 +16,17 @@
   "author": "zhenghaoyang24",
   "license": "MIT",
   "type": "module",
+  "devDependencies": {
+    "vue": "^3.0.0"
+  },
   "exports": {
     ".": {
       "import": "./index.js"
     }
-  }
+  },
+  "files": [
+    "src",
+    "index.js",
+    "enhanceAppFile.js"
+  ]
 }

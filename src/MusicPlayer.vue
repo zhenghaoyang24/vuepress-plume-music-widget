@@ -86,11 +86,19 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 
+// 从环境变量中获取配置
+const config = typeof MUSIC_PLAYER_OPTIONS !== 'undefined' ? MUSIC_PLAYER_OPTIONS : {
+  songs: [],
+  autoPlay: false,
+  defaultVolume: 0.5,
+  defaultIndex: 0
+}
+
 // 状态
-const songs = ref([])
-const autoPlay = ref(false)
-const defaultVolume = ref(0.5)
-const defaultIndex = ref(0)
+const songs = ref(config.songs || [])
+const autoPlay = ref(config.autoPlay || false)
+const defaultVolume = ref(config.defaultVolume !== undefined ? config.defaultVolume : 0.5)
+const defaultIndex = ref(config.defaultIndex !== undefined ? config.defaultIndex : 0)
 
 const isPlaying = ref(false)
 const currentTime = ref(0)
@@ -303,20 +311,6 @@ const cleanup = () => {
 
 // 组件挂载和卸载
 onMounted(() => {
-  // 从全局配置获取插件选项
-  if (typeof window !== 'undefined' && window.__MUSIC_PLAYER_OPTIONS__) {
-    songs.value = window.__MUSIC_PLAYER_OPTIONS__.songs || []
-    autoPlay.value = window.__MUSIC_PLAYER_OPTIONS__.autoPlay || false
-    defaultVolume.value = window.__MUSIC_PLAYER_OPTIONS__.defaultVolume !== undefined ? 
-      window.__MUSIC_PLAYER_OPTIONS__.defaultVolume : 0.5
-    defaultIndex.value = window.__MUSIC_PLAYER_OPTIONS__.defaultIndex !== undefined ? 
-      window.__MUSIC_PLAYER_OPTIONS__.defaultIndex : 0
-      
-    // 更新当前索引和音量
-    currentIndex.value = Math.min(defaultIndex.value, songs.value.length - 1)
-    volume.value = defaultVolume.value
-  }
-  
   initAudio()
   
   // 初始化位置

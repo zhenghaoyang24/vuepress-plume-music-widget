@@ -108,8 +108,7 @@ export default defineUserConfig({
 
 ```
 src/
-├── MusicPlayer.vue  # 音乐播放器组件
-└── index.js         # 插件入口文件
+└── MusicWidget.vue  # 音乐播放器组件
 ```
 
 ### 组件功能

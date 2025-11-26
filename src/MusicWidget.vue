@@ -3,8 +3,10 @@
     class="music-player" 
     :class="{ 'expanded': isExpanded, 'left': position === 'left', 'right': position === 'right' }"
     :style="{ 
-      top: '50%',
-      transform: `translateY(-50%) translateX(${dragOffset}px)`
+      left: position === 'left' ? '0px' : 'auto',
+      right: position === 'right' ? '0px' : 'auto',
+      bottom: '20px',
+      transform: `translateX(${dragOffset}px)`
     }"
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave"
@@ -107,7 +109,7 @@ const isPlaying = ref(false)
 const currentTime = ref(0)
 const duration = ref(0)
 const volume = ref(defaultVolume.value)
-const currentIndex = ref(Math.min(defaultIndex.value, songs.value.length - 1))
+const currentIndex = ref(songs.value.length > 0 ? Math.min(defaultIndex.value, songs.value.length - 1) : 0)
 const isExpanded = ref(false)
 const position = ref('left') // left 或 right
 const dragOffset = ref(0)
@@ -181,24 +183,28 @@ const handleDragEnd = () => {
   
   // 自动吸附到最近的边界
   const windowWidth = window.innerWidth
-  const playerWidth = 300 // 假设展开宽度为300px
+  const playerWidth = 25 // 收缩状态宽度
+  const expandedWidth = 300 // 展开状态宽度
+  const currentPlayerWidth = isExpanded.value ? expandedWidth : playerWidth
+  
+  // 计算中心点位置
   const centerPosition = windowWidth / 2
-  const currentPosition = windowWidth / 2 + dragOffset.value
+  const currentPosition = (position.value === 'left' ? 0 : windowWidth) + dragOffset.value + currentPlayerWidth / 2
   
   if (currentPosition < centerPosition) {
     // 吸附到左侧
-    dragOffset.value = -windowWidth / 2 + 25 // 25px是收缩状态的宽度
+    dragOffset.value = 0
     position.value = 'left'
   } else {
     // 吸附到右侧
-    dragOffset.value = windowWidth / 2 - 25
+    dragOffset.value = 0
     position.value = 'right'
   }
 }
 
 // 播放控制
 const togglePlay = () => {
-  if (!audioElement) return
+  if (!audioElement || songs.value.length === 0) return
   
   if (isPlaying.value) {
     audioElement.pause()
@@ -213,7 +219,7 @@ const prevSong = () => {
   if (songs.value.length <= 1) return
   
   currentIndex.value = (currentIndex.value - 1 + songs.value.length) % songs.value.length
-  if (isPlaying.value) {
+  if (isPlaying.value && songs.value.length > 0) {
     playCurrentSong()
   }
 }
@@ -222,7 +228,7 @@ const nextSong = () => {
   if (songs.value.length <= 1) return
   
   currentIndex.value = (currentIndex.value + 1) % songs.value.length
-  if (isPlaying.value) {
+  if (isPlaying.value && songs.value.length > 0) {
     playCurrentSong()
   }
 }
@@ -315,12 +321,6 @@ const cleanup = () => {
 // 组件挂载和卸载
 onMounted(() => {
   initAudio()
-  
-  // 初始化位置
-  if (typeof window !== 'undefined') {
-    dragOffset.value = -window.innerWidth / 2 + 25
-    position.value = 'left'
-  }
 })
 
 onUnmounted(() => {
@@ -331,8 +331,7 @@ onUnmounted(() => {
 <style scoped>
 .music-player {
   position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
+  bottom: 20px;
   width: 25px;
   height: 50px;
   /* 默认背景色，防止CSS变量未定义时不可见 */
@@ -344,8 +343,8 @@ onUnmounted(() => {
   display: flex;
   overflow: hidden;
   transition: all 0.3s ease;
-  z-index: 1000;
   cursor: grab;
+  z-index: 10000;
 }
 
 .music-player.expanded {

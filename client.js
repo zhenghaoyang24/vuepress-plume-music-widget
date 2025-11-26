@@ -1,9 +1,28 @@
-// client.js - å®¢æˆ·ç«¯å¢žå¼ºæ–‡ä»¶
-// è¿™ä¸ªæ–‡ä»¶åªåœ¨æµè§ˆå™¨çŽ¯å¢ƒä¸­è¿è¡Œï¼Œæ‰€ä»¥å¯ä»¥å®‰å…¨åœ°å¯¼å…¥ .vue æ–‡ä»¶
-
+// client.js - ¿Í»§¶ËÔöÇ¿ÎÄ¼þ
+// VuePress 2.x ¿Í»§¶ËÔöÇ¿ÎÄ¼þµÄ¸ñÊ½
+import { defineAsyncComponent, h, createApp } from 'vue'
 import MusicPlayer from './src/MusicPlayer.vue'
 
-export default ({ app }) => {
-  // æ³¨å†Œå…¨å±€ç»„ä»¶
-  app.component('MusicPlayer', MusicPlayer)
+// ¿Í»§¶ËÔöÇ¿º¯Êý
+// export default ({ app, router, siteData }) => {
+//   // ×¢²áÈ«¾Ö×é¼þ
+//   app.component('MusicPlayer', MusicPlayer)
+  
+//   // µÈ´ýDOM¼ÓÔØÍê³Éºó´´½¨²¢¹ÒÔØÒôÀÖ²¥·ÅÆ÷
+//   if (typeof window !== 'undefined') {
+//     window.addEventListener('DOMContentLoaded', () => {
+//       // ´´½¨¹ÒÔØµã
+//       const mountPoint = document.createElement('div')
+//       mountPoint.id = 'music-player-container'
+//       document.body.appendChild(mountPoint)
+      
+//       // ´´½¨¶ÀÁ¢µÄVueÓ¦ÓÃÊµÀýÀ´¹ÒÔØÒôÀÖ²¥·ÅÆ÷
+//       const playerApp = createApp(MusicPlayer)
+//       playerApp.mount(mountPoint)
+//     })
+//   }
+// }
+export default ({ Vue }) => {
+  Vue.component('MusicPlayer', MusicPlayer)
 }
+

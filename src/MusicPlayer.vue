@@ -2,7 +2,10 @@
   <div 
     class="music-player" 
     :class="{ 'expanded': isExpanded, 'left': position === 'left', 'right': position === 'right' }"
-    :style="{ transform: `translateX(${dragOffset}px)` }"
+    :style="{ 
+      top: '50%',
+      transform: `translateY(-50%) translateX(${dragOffset}px)`
+    }"
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave"
     @mousedown="handleDragStart"
@@ -314,8 +317,10 @@ onMounted(() => {
   initAudio()
   
   // 初始化位置
-  dragOffset.value = -window.innerWidth / 2 + 25
-  position.value = 'left'
+  if (typeof window !== 'undefined') {
+    dragOffset.value = -window.innerWidth / 2 + 25
+    position.value = 'left'
+  }
 })
 
 onUnmounted(() => {
@@ -330,7 +335,9 @@ onUnmounted(() => {
   transform: translateY(-50%);
   width: 25px;
   height: 50px;
-  background: var(--vp-c-brand-soft);
+  /* 默认背景色，防止CSS变量未定义时不可见 */
+  background: rgba(131, 208, 218, 0.314);
+  background: var(--vp-c-brand-soft, rgba(131, 208, 218, 0.314));
   backdrop-filter: blur(10px);
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -375,7 +382,9 @@ onUnmounted(() => {
 .cover-placeholder {
   width: 100%;
   height: 100%;
-  background: var(--vp-c-brand-3);
+  /* 默认背景色 */
+  background: #8cccd5;
+  background: var(--vp-c-brand-3, #8cccd5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -383,7 +392,9 @@ onUnmounted(() => {
 
 .cover-placeholder::before {
   content: "♪";
-  color: var(--vp-c-brand-1);
+  /* 默认颜色 */
+  color: #5086a1;
+  color: var(--vp-c-brand-1, #5086a1);
   font-size: 20px;
 }
 
@@ -407,7 +418,9 @@ onUnmounted(() => {
 .song-title {
   font-weight: bold;
   font-size: 14px;
-  color: var(--vp-c-brand-1);
+  /* 默认颜色 */
+  color: #5086a1;
+  color: var(--vp-c-brand-1, #5086a1);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -415,7 +428,9 @@ onUnmounted(() => {
 
 .song-artist {
   font-size: 12px;
-  color: var(--vp-c-brand-2);
+  /* 默认颜色 */
+  color: #6aa1b7;
+  color: var(--vp-c-brand-2, #6aa1b7);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -439,7 +454,9 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   transition: background-color 0.2s;
-  color: var(--vp-c-brand-1);
+  /* 默认颜色 */
+  color: #5086a1;
+  color: var(--vp-c-brand-1, #5086a1);
 }
 
 .control-btn:hover:not(:disabled) {
@@ -454,12 +471,16 @@ onUnmounted(() => {
 .play-pause-btn {
   width: 32px;
   height: 32px;
-  background: var(--vp-c-brand-1);
+  /* 默认背景色 */
+  background: #5086a1;
+  background: var(--vp-c-brand-1, #5086a1);
   color: white;
 }
 
 .play-pause-btn:hover:not(:disabled) {
-  background: var(--vp-c-brand-2);
+  /* 默认背景色 */
+  background: #6aa1b7;
+  background: var(--vp-c-brand-2, #6aa1b7);
 }
 
 .progress-container {
@@ -470,7 +491,9 @@ onUnmounted(() => {
   width: 100%;
   height: 4px;
   appearance: none;
-  background: var(--vp-c-brand-3);
+  /* 默认背景色 */
+  background: #8cccd5;
+  background: var(--vp-c-brand-3, #8cccd5);
   border-radius: 2px;
   outline: none;
 }
@@ -480,13 +503,17 @@ onUnmounted(() => {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: var(--vp-c-brand-1);
+  /* 默认背景色 */
+  background: #5086a1;
+  background: var(--vp-c-brand-1, #5086a1);
   cursor: pointer;
 }
 
 .time-display {
   font-size: 10px;
-  color: var(--vp-c-brand-2);
+  /* 默认颜色 */
+  color: #6aa1b7;
+  color: var(--vp-c-brand-2, #6aa1b7);
   text-align: right;
   margin-top: 2px;
 }
@@ -501,7 +528,9 @@ onUnmounted(() => {
   flex: 1;
   height: 4px;
   appearance: none;
-  background: var(--vp-c-brand-3);
+  /* 默认背景色 */
+  background: #8cccd5;
+  background: var(--vp-c-brand-3, #8cccd5);
   border-radius: 2px;
   outline: none;
 }
@@ -511,7 +540,9 @@ onUnmounted(() => {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: var(--vp-c-brand-1);
+  /* 默认背景色 */
+  background: #5086a1;
+  background: var(--vp-c-brand-1, #5086a1);
   cursor: pointer;
 }
 </style>
